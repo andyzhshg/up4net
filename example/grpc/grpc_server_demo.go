@@ -8,7 +8,7 @@ import (
 
 	"github.com/andyzhshg/up4net/example/grpc/grpc_demo"
 
-	u4n_grpc "github.com/andyzhshg/up4net/grpc"
+	u4n_grpc "github.com/andyzhshg/up4net/grpc/server"
 	"google.golang.org/grpc"
 )
 
