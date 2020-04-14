@@ -65,8 +65,8 @@ We predefined some command line arguments, you can pass these arguments to overr
 
 |name|default|description|
 |----|-------|-----------|
-|--host_addr|localhost:10101|The server address in the format of host:port|
-|--tls_on|false|Connection uses TLS if true, else plain TCP|
+|--host|localhost:10101|The server address in the format of host:port|
+|--tls|false|Connection uses TLS if true, else plain TCP|
 |--ca_file|cert.pem|The file containing the CA root cert file|
 |--host_override|www.example.com|The server name use to verify the hostname returned by TLS handshake|
 

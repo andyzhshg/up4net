@@ -10,8 +10,8 @@ import (
 )
 
 var (
-	cAddr         = flag.String("host_addr", "localhost:10101", "The server address in the format of host:port")
-	cTLS          = flag.Bool("tls_on", false, "Connection uses TLS if true, else plain TCP")
+	cAddr         = flag.String("host", "localhost:10101", "The server address in the format of host:port")
+	cTLS          = flag.Bool("tls", false, "Connection uses TLS if true, else plain TCP")
 	cCaFile       = flag.String("ca_file", "ca.pem", "The file containing the CA root cert file")
 	cHostOverride = flag.String("host_override", "www.example.com", "The server name use to verify the hostname returned by TLS handshake")
 )
