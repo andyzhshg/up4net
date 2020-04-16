@@ -13,63 +13,48 @@ We use `example/grpc` as an example.
 
 ```bash
 cd example/grpc
-mkdir grpc_demo
-protoc -I ./ ./grpc_demo.proto --go_out=plugins=grpc:grpc_demo
+protoc -I ./proto ./proto/hello.proto --go_out=plugins=grpc:proto
 ```
 
 ### gRPC Server
 
-To run a gRPC server, you only have to implement an extra interface- `GRPCServerImpl`, which has only one method to implement- `RegisterServer(*grpc.Server)`.
+To run a gRPC server, you only have to implement an extra interface- `Register`, which has only one method to implement- `RegisterServer(*grpc.Server)`.
 
 We call `RegisterHelloServer` in the generated `*.pb.go` file for this example. You should find your corresponding `RegisterXxxxx` in your own `*.pb.go` file.
 
 ```go
 func (s *myHelloServer) RegisterServer(gSvr *grpc.Server) {
-	grpc_demo.RegisterHelloServer(gSvr, s)
+	proto.RegisterHelloServer(gSvr, s)
 }
 ```
 
 Now you can start a gRPC server with one line of code- 
 
 ```go
-u4n_grpc.RunGRPCServer(context.TODO(), &myHelloServer{})
+grpc_server.Run(context.TODO(), &myHelloServer{}, grpc_server.DefaultConfig())
 ```
 
-#### Command line arguments
+#### Configure
 
-We predefined some command line arguments, you can pass these arguments to override the default ones.
-
-|name|default|description|
-|----|-------|-----------|
-|--host|localhost|Host name or ip address of server|
-|--port|10101|The server port|
-|--tls|false|Connection uses TLS if true, else plain TCP|
-|--cert_file|cert.pem|The TLS cert file|
-|--key_file|cert.key|The TLS key file|
+If you don't want the defaut configuration provided by `grpc_server.DefaultConfig()`, you can pass your own config as argument.
 
 #### Other ServerOption
 
-You can configure all ServerOption(s) by passing parameter to `RunGRPCServer`, this will override default ServerOption.
+You can configure all ServerOption(s) by passing parameter to `Run`, this will override default ServerOption.
 
 ### gRPC Client
 
 To start a gRPC client, one has to configure and start a net connection. With the help of this library, you can do this in one line of code-
 
 ```go
-conn, err := u4n_grpc.NewGRPCClientConnection()
+grpc_client.NewClientConnection(grpc_client.DefaultConfig())
 ```
 
-#### Command line arguments
+#### Configure
 
-We predefined some command line arguments, you can pass these arguments to override the default ones.
+If you don't want the defaut configuration provided by `grpc_client.DefaultConfig()`, you can pass your own config as argument.
 
-|name|default|description|
-|----|-------|-----------|
-|--host_addr|localhost:10101|The server address in the format of host:port|
-|--tls_on|false|Connection uses TLS if true, else plain TCP|
-|--ca_file|cert.pem|The file containing the CA root cert file|
-|--host_override|www.example.com|The server name use to verify the hostname returned by TLS handshake|
 
 #### Other DialOption
 
-You can configure all ServerOption(s) by passing parameter to `RunGRPCServer`, this will override default ServerOption.
+You can configure all ClientConn(s) by passing parameter to `NewClientConnection`, this will override default ClientConn.
